@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-ms
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demo-ms
+  template:
+    metadata:
+      labels:
+        app: demo-ms
+    spec:
+      containers:
+        - name: demo-ms
+          image: tahamoula/w9-assignment:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 7070
+          envFrom:
+            - configMapRef:
+                name: app-config

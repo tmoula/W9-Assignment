@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Microservice Assignment UI</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: #f6f8fa;
+            color: #333;
+            margin: 0;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #0052cc;
+            margin-bottom: 40px;
+        }
+        section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            width: 80%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+            border-left: 5px solid #0052cc;
+            padding-left: 10px;
+            font-size: 1.2rem;
+        }
+        pre {
+            background: #f0f0f0;
+            border-radius: 6px;
+            padding: 15px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        footer {
+            text-align: center;
+            color: #888;
+            margin-top: 40px;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+<h1>🌐 Microservice Assignment UI</h1>
+
+<section>
+    <h2>Configuration Data (/config)</h2>
+    <pre id="config">Loading configuration...</pre>
+</section>
+
+<section>
+    <h2>Fibonacci Sequence (/fib?length=10)</h2>
+    <pre id="fib">Loading Fibonacci sequence...</pre>
+</section>
+
+<footer>Developed by Taha Moula — Week 9 Assignment</footer>
+
+<script>
+    async function loadData() {
+        try {
+            const cfg = await fetch('/config').then(r => r.json());
+            document.getElementById("config").textContent = JSON.stringify(cfg, null, 2);
+
+            const fib = await fetch('/fib?length=10').then(r => r.json());
+            document.getElementById("fib").textContent = JSON.stringify(fib, null, 2);
+        } catch (err) {
+            document.getElementById("config").textContent = "❌ Error loading /config";
+            document.getElementById("fib").textContent = "❌ Error loading /fib";
+            console.error(err);
+        }
+    }
+    loadData();
+</script>
+</body>
+</html>
